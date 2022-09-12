@@ -28,4 +28,8 @@ mongoose.connection.on("connected",()=>{
     console.log('Conectado')
 })
 
-app.listen(3000);
+//PORT
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
+});
