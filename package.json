@@ -1,0 +1,21 @@
+{
+  "name": "la-jatata-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "mongodb-autoincrement": "^1.0.1",
+    "mongoose": "^6.6.0",
+    "mongoose-sequence": "^5.3.1",
+    "nodemon": "^2.0.19"
+  }
+}
