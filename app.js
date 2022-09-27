@@ -7,11 +7,15 @@ const bodyParser = require('body-parser')
 require('dotenv/config');
 
 const postsRoute = require('./routes/products')
+const reservesRoute = require('./routes/reservas')
+const comandasRoute = require('./routes/comandas')
+
 app.use(cors());
 app.use(bodyParser.json());
 //ROUTES
 app.use('/products',postsRoute);
-
+app.use('/reservas',reservesRoute);
+app.use('/comandas',comandasRoute);
 
 app.get('/',(req,res)=> {
     res.send('Hola Jatata')
