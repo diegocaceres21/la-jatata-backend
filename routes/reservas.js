@@ -38,10 +38,10 @@ router.delete('/:reserveId', async (req,res)=>{
 });
 
 //ACOMODAR
-router.patch('/:productId', async (req,res)=>{
+router.patch('/:reserveId', async (req,res)=>{
     try{
-        const updatedProduct = await Product.updateOne({_id: req.params.productId},{$set: {price:req.body.price}});
-        res.json(updatedProduct);
+        const updatedReserve = await Reserva.updateOne({_id: req.params.reserveId},{$set: {products:req.body.products}});
+        res.json(updatedReserve);
     }
     catch(err){
         res.json({message:err});
