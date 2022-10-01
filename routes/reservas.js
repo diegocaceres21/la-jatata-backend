@@ -26,8 +26,19 @@ router.get('/:reserveId', async (req,res)=>{
     }
 });
 
-router.get('/', async function(req, res) {
+/*router.get('/:date', async function(req, res) {
     const date = new Date(req.query.date);
+});*/
+
+router.get('/:date', async function(req, res) {
+    try{
+        const reserve = await Reserva.find(req.params.date);
+        res.json(reserve);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
 });
 //DELETE
 router.delete('/:reserveId', async (req,res)=>{
