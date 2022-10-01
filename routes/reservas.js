@@ -3,7 +3,7 @@ const express =require('express');
 const router = express.Router();
 const Reserva = require('../models/Reserva')
 
-
+//nodejs http get by date?
 //GET ALL RESERVES
 router.get('/', async (req,res)=>{
     try{
@@ -26,6 +26,9 @@ router.get('/:reserveId', async (req,res)=>{
     }
 });
 
+router.get('/', async function(req, res) {
+    const date = new Date(req.query.date);
+});
 //DELETE
 router.delete('/:reserveId', async (req,res)=>{
     try{
