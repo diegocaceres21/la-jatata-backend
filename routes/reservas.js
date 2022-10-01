@@ -5,7 +5,7 @@ const Reserva = require('../models/Reserva')
 
 //nodejs http get by date?
 //GET ALL RESERVES
-router.get('/', async (req,res)=>{
+router.get('/all', async (req,res)=>{
     try{
         const reservas = await Reserva.find();
         res.json(reservas);
