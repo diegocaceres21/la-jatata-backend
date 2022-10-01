@@ -65,6 +65,26 @@ router.patch('/:reserveId', async (req,res)=>{
     }
 });
 
+// put in nodejs?
+router.put("/:reserveId", async(req, res) => {
+    try{
+        const updatedReserve = await Reserva.updateOne({_id: req.params.reserveId},{$set: {
+            date: req.body.date,
+            zone: req.body.zone,
+            clientName: req.body.clientName,
+            num_people: req.body.num_people,
+            total: req.body.total,
+            products: req.body.products,
+            waiterId: req.body.waiterId
+        }});
+        res.json(updatedReserve);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+}) 
+
+
 router.post('/',(req,res)=>{
     const reserve = new Reserva({
        // id: req.body.id,
