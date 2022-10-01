@@ -30,10 +30,12 @@ router.get('/:reserveId', async (req,res)=>{
     const date = new Date(req.query.date);
 });*/
 
-router.get('/:date', async function(req, res) {
+router.get('/', async function(req, res) {
     try{
-        const reserve = await Reserva.find(req.params.date);
-        res.json(reserve);
+        let tdate = req.query.date;
+        const reservas = await Reserva.find({date:tdate})
+        //const reserve = await Reserva.find(req.query.date);
+        res.json(reservas);
     }
     catch(err){
         res.json({message:err});
@@ -41,6 +43,7 @@ router.get('/:date', async function(req, res) {
     //const date = new Date(req.query.date);
 });
 //DELETE
+//nodejs pass date as query param?
 router.delete('/:reserveId', async (req,res)=>{
     try{
         const removedReserve = await Reserva.remove({_id: req.params.reserveId});
