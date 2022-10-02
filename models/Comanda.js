@@ -16,6 +16,7 @@ const ComandaSchema = mongoose.Schema({
         quantity:Number,
         total:Number
     }],
+    status:{type:String}
 },
 {timestamps: true},
 { _id: false });
