@@ -5,14 +5,27 @@ const Product = require('../models/Product')
 
 
 //GET ALL PRODUCTS
-router.get('/', async (req,res)=>{
+router.get('/all', async (req,res)=>{
     try{
-        const products = await Product.find();
+        const products = await Product.find().sort({name:1});
         res.json(products);
     }
     catch(err){
         res.json({message:err});
     }
+});
+
+router.get('/', async function(req, res) {
+    try{
+        let cat = req.query.category;
+        const products = await Product.find({category:cat}).sort({name:1});
+        //const reserve = await Reserva.find(req.query.date);
+        res.json(products);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
 });
 
 //GET PRODUCT BY ID
@@ -49,6 +62,9 @@ router.patch('/:productId', async (req,res)=>{
 /*router.get('/inside',(req,res)=>{
     res.send('Inside request')
 });*/
+
+//sort get express
+
 router.post('/',(req,res)=>{
     const product = new Product({
        // id: req.body.id,
