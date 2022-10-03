@@ -28,6 +28,25 @@ router.get('/', async function(req, res) {
     //const date = new Date(req.query.date);
 });
 
+//express.js get contains?
+//Person.find({username: {$regex: '(.*)adm(.*)'}})
+
+///test/i
+
+router.get('/filter', async function(req, res) {
+    try{
+        let search = req.query.search;
+        const products = await Product.find({name:{$regex: '(.*)' + search + '(.*)'}});
+        console.log(products);
+        //const reserve = await Reserva.find(req.query.date);
+        res.json(products);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
+});
+
 //GET PRODUCT BY ID
 router.get('/:productId', async (req,res)=>{
     try{
