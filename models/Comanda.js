@@ -9,14 +9,15 @@ const ComandaSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    waiter_name:{type: String},
     products:[{
         product_id: Number,
         product_name: String,
-        price: Number,
         quantity:Number,
-        total:Number
+        state:String
     }],
-    status:{type:String}
+    status:{type:String},
+    notes: {type:String}
 },
 {timestamps: true},
 { _id: false });
