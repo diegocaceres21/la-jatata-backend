@@ -15,6 +15,31 @@ router.get('/all', async (req,res)=>{
     }
 });
 
+router.get('/waiter', async function(req, res) {
+    try{
+        let waiterId = req.query.waiterId;
+        const reservas = await Reserva.find({waiterId:waiterId})
+        //const reserve = await Reserva.find(req.query.date);
+        res.json(reservas);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
+});
+
+router.get('/zones', async function(req, res) {
+    try{
+        let lzone = req.query.zone;
+        const reservas = await Reserva.find({zone:lzone})
+        //const reserve = await Reserva.find(req.query.date);
+        res.json(reservas);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
+});
 //GET PRODUCT BY ID
 router.get('/:reserveId', async (req,res)=>{
     try{
@@ -42,6 +67,8 @@ router.get('/', async function(req, res) {
     }
     //const date = new Date(req.query.date);
 });
+
+
 //DELETE
 //nodejs pass date as query param?
 router.delete('/:reserveId', async (req,res)=>{

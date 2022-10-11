@@ -18,7 +18,7 @@ const ReservaSchema = mongoose.Schema({
     },*/
     _id: {type: Number},
     date:{
-        type: Date, 
+        type: Date
     },
     zone:{
         type: String,
@@ -47,7 +47,7 @@ const ReservaSchema = mongoose.Schema({
         type:String
     },
     waiterId:{
-        type: Number,
+        type: Number
     },
 },{ _id: false });
 

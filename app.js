@@ -9,6 +9,7 @@ require('dotenv/config');
 const postsRoute = require('./routes/products')
 const reservesRoute = require('./routes/reservas')
 const comandasRoute = require('./routes/comandas')
+const meserosRoute = require('./routes/meseros')
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -16,6 +17,7 @@ app.use(bodyParser.json());
 app.use('/products',postsRoute);
 app.use('/reservas',reservesRoute);
 app.use('/comandas',comandasRoute);
+app.use('/meseros',meserosRoute);
 
 app.get('/',(req,res)=> {
     res.send('Hola Jatata')
