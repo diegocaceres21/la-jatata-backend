@@ -24,5 +24,5 @@ const ProductSchema = mongoose.Schema({
     }
 },{ _id: false });
 
-ProductSchema.plugin(AutoIncrement, {inc_field: '_id'});
+ProductSchema.plugin(AutoIncrement, {id: 'products_id_counter',inc_field: '_id'});
 module.exports = mongoose.model('Products',ProductSchema)
