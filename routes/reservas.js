@@ -28,11 +28,23 @@ router.get('/waiter', async function(req, res) {
     //const date = new Date(req.query.date);
 });
 
-router.get('/zones', async function(req, res) {
+/*router.get('/zones', async function(req, res) {
     try{
         let lzone = req.query.zone;
-        const reservas = await Reserva.find({zone:lzone})
+        let lwaiter = req.query.waiterId;
+        const reservas = await Reserva.find({zone:lzone,waiterId:lwaiter})
         //const reserve = await Reserva.find(req.query.date);
+        res.json(reservas);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
+});*/
+
+router.get('/zones/:zone/:date', async function(req, res) {
+    try{
+        const reservas = await Reserva.find({zone:req.params.zone, date:req.params.date})
         res.json(reservas);
     }
     catch(err){
