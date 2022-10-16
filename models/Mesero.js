@@ -5,7 +5,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 const MeseroSchema = mongoose.Schema({
 
     _id: {type: Number},
-    waiter_name:{type: String},
+    waiterName:{type: String},
 },
 { _id: false });
 

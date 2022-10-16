@@ -1,7 +1,7 @@
 const express =require('express');
 
 const router = express.Router();
-const Mesero = require('../models/Product')
+const Mesero = require('../models/Mesero')
 
 
 //GET ALL PRODUCTS
@@ -15,20 +15,6 @@ router.get('/', async (req,res)=>{
     }
 });
 
-
-router.get('/filter', async function(req, res) {
-    try{
-        let search = req.query.search;
-        const meseros = await Mesero.find({name:{$regex: '(.*)' + search + '(.*)'}});
-        console.log(meseros);
-        //const reserve = await Reserva.find(req.query.date);
-        res.json(meseros);
-    }
-    catch(err){
-        res.json({message:err});
-    }
-    //const date = new Date(req.query.date);
-});
 
 //GET PRODUCT BY ID
 router.get('/:meseroId', async (req,res)=>{
@@ -70,7 +56,7 @@ router.delete('/:meseroId', async (req,res)=>{
 router.post('/',(req,res)=>{
     const mesero = new Mesero({
        // id: req.body.id,
-        waiter_name: req.body.waiter_name
+        waiterName: req.body.waiterName
     });
     mesero.save()
     .then(data=>{
