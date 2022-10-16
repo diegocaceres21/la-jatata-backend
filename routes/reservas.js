@@ -15,7 +15,7 @@ router.get('/all', async (req,res)=>{
     }
 });
 
-router.get('/waiter', async function(req, res) {
+/*router.get('/waiter', async function(req, res) {
     try{
         let waiterId = req.query.waiterId;
         const reservas = await Reserva.find({waiterId:waiterId})
@@ -26,13 +26,26 @@ router.get('/waiter', async function(req, res) {
         res.json({message:err});
     }
     //const date = new Date(req.query.date);
-});
-
-/*router.get('/zones', async function(req, res) {
+});*/
+//Para cuando ambos sean undefined usar el get /
+router.get('/zones', async function(req, res) {
     try{
         let lzone = req.query.zone;
-        let lwaiter = req.query.waiterId;
-        const reservas = await Reserva.find({zone:lzone,waiterId:lwaiter})
+        let ldate = req.query.date;
+        let lwaiter = req.query.waiter;
+        var reservas;
+        //console.log(req.query.zone)
+        if(lzone === undefined){
+            reservas = await Reserva.find({date:ldate,waiterId:lwaiter})
+            console.log(req.query.waiter)
+        }
+        else if(lwaiter === undefined){
+            reservas = await Reserva.find({date:ldate,zone:lzone})
+            console.log(req.query.zone)
+        }
+        else{
+            reservas = await Reserva.find({zone:lzone,date:ldate,waiterId:lwaiter})
+        }
         //const reserve = await Reserva.find(req.query.date);
         res.json(reservas);
     }
@@ -40,9 +53,9 @@ router.get('/waiter', async function(req, res) {
         res.json({message:err});
     }
     //const date = new Date(req.query.date);
-});*/
+});
 
-router.get('/zones/:zone/:date', async function(req, res) {
+/*router.get('/zones/:zone/:date', async function(req, res) {
     try{
         const reservas = await Reserva.find({zone:req.params.zone, date:req.params.date})
         res.json(reservas);
@@ -51,7 +64,17 @@ router.get('/zones/:zone/:date', async function(req, res) {
         res.json({message:err});
     }
     //const date = new Date(req.query.date);
-});
+});*/
+
+/*router.get('/zones', async function(req, res) {
+    try{
+        const reservas = await Reserva.find({zone:req.query.zone, date:req.query.date})
+        res.json(reservas);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+});*/
 //GET PRODUCT BY ID
 router.get('/:reserveId', async (req,res)=>{
     try{
