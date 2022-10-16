@@ -46,8 +46,8 @@ const ReservaSchema = mongoose.Schema({
     notas:{
         type:String
     },
-    waiterId:{
-        type: Number
+    waiterName:{
+        type: String
     },
 },{ _id: false });
 

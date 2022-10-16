@@ -36,7 +36,7 @@ router.get('/zones', async function(req, res) {
         var reservas;
         //console.log(req.query.zone)
         if(lzone === undefined){
-            reservas = await Reserva.find({date:ldate,waiterId:lwaiter})
+            reservas = await Reserva.find({date:ldate,waiterName:lwaiter})
             console.log(req.query.waiter)
         }
         else if(lwaiter === undefined){
@@ -44,7 +44,7 @@ router.get('/zones', async function(req, res) {
             console.log(req.query.zone)
         }
         else{
-            reservas = await Reserva.find({zone:lzone,date:ldate,waiterId:lwaiter})
+            reservas = await Reserva.find({zone:lzone,date:ldate,waiterName:lwaiter})
         }
         //const reserve = await Reserva.find(req.query.date);
         res.json(reservas);
@@ -137,7 +137,7 @@ router.put("/:reserveId", async(req, res) => {
             num_people: req.body.num_people,
             total: req.body.total,
             products: req.body.products,
-            waiterId: req.body.waiterId
+            waiterName: req.body.waiterName
         }});
         res.json(updatedReserve);
     }
@@ -156,7 +156,7 @@ router.post('/',(req,res)=>{
         num_people: req.body.num_people,
         total: req.body.total,
         products: req.body.products,
-        waiterId: req.body.waiterId
+        waiterName: req.body.waiterName
     });
     reserve.save()
     .then(data=>{
