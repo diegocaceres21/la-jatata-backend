@@ -32,10 +32,9 @@ const ReservaSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    /*total:{ //OPCIONAL
-        type: Number,
-        required: true
-    },*/
+    total:{ //OPCIONAL
+        type: Number
+    },
     products:[{
         product_id: Number,
         product_name: String,
