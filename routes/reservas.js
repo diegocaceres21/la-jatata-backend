@@ -137,7 +137,8 @@ router.put("/:reserveId", async(req, res) => {
             num_people: req.body.num_people,
             total: req.body.total,
             products: req.body.products,
-            waiterName: req.body.waiterName
+            waiterName: req.body.waiterName,
+            notas:req.body.notas
         }});
         res.json(updatedReserve);
     }
@@ -156,7 +157,8 @@ router.post('/',(req,res)=>{
         num_people: req.body.num_people,
         total: req.body.total,
         products: req.body.products,
-        waiterName: req.body.waiterName
+        waiterName: req.body.waiterName,
+        notas:req.body.notas
     });
     reserve.save()
     .then(data=>{
