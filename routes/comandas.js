@@ -27,6 +27,22 @@ router.get('/', async function(req, res) {
     }
     //const date = new Date(req.query.date);
 });
+router.get('/date', async function(req, res) {
+    try{
+        let date = req.query.date;
+        let startDate = new Date(date);
+        startDate.setHours(0, 0, 0, 0)
+        let endDate = new Date(date);
+        endDate.setHours(23, 59, 59, 59)
+        const comandas = await Comanda.find({createdAt:{$gte:startDate, $lt:endDate}})
+        //const reserve = await Reserva.find(req.query.date);
+        res.json(comandas);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
+});
 //GET PRODUCT BY ID
 router.get('/:comandaId', async (req,res)=>{
     try{
