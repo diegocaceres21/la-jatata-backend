@@ -12,6 +12,7 @@ const comandasRoute = require('./routes/comandas')
 const meserosRoute = require('./routes/meseros')
 const ventasRoute = require('./routes/ventas')
 const menusRoute = require('./routes/menu')
+const tokensRoute = require('./routes/tokens')
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -22,6 +23,7 @@ app.use('/comandas',comandasRoute);
 app.use('/meseros',meserosRoute);
 app.use('/ventas',ventasRoute);
 app.use('/menu',menusRoute);
+app.use('/tokens',tokensRoute);
 
 app.get('/',(req,res)=> {
     res.send('Hola Jatata')
