@@ -78,7 +78,7 @@ router.patch('/:comandaId', async (req,res)=>{
 
 router.patch('/completed/:comandaId', async (req,res)=>{
     try{
-        const updatedComanda = await Comanda.updateOne({_id: req.params._id},{$set: {status:req.body.status}});
+        const updatedComanda = await Comanda.updateOne({_id: req.params.comandaId},{$set: {status:req.body.status}});
         res.json(updatedComanda);
     }
     catch(err){
