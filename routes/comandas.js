@@ -68,7 +68,17 @@ router.delete('/:comandaId', async (req,res)=>{
 //ACOMODAR
 router.patch('/:comandaId', async (req,res)=>{
     try{
-        const updatedComanda = await Comanda.updateOne({_id: req.params._id},{$set: {products:req.body.products}});
+        const updatedComanda = await Comanda.updateOne({_id: req.params.comandaId},{$set: {products:req.body.products}});
+        res.json(updatedComanda);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+});
+
+router.patch('/completed/:comandaId', async (req,res)=>{
+    try{
+        const updatedComanda = await Comanda.updateOne({_id: req.params._id},{$set: {status:req.body.status}});
         res.json(updatedComanda);
     }
     catch(err){
