@@ -34,7 +34,7 @@ router.get('/date', async function(req, res) {
         startDate.setHours(0, 0, 0, 0)
         let endDate = new Date(date);
         endDate.setHours(23, 59, 59, 59)
-        const comandas = await Comanda.find({createdAt:{$gte:startDate, $lt:endDate}/*,status:"Pendiente"*/})
+        const comandas = await Comanda.find({createdAt:{$gte:startDate, $lt:endDate}/*,status:"Pendiente"*/,status:"Pendiente"})
         //const reserve = await Reserva.find(req.query.date);
         res.json(comandas); 
     }
