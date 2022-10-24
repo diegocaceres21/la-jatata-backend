@@ -12,7 +12,7 @@ const MenuSchema = mongoose.Schema({
         product_id: Number,
         product_name: String,
         prepared:Number,
-        available:Number
+        reservated:Number
     }],
 },{ _id: false });
 
