@@ -21,16 +21,16 @@ const ReservaSchema = mongoose.Schema({
         type: Date
     },
     zone:{
-        type: String,
-        required: true
+        type: String
+        //required: true
     },
     clientName:{
         type: String,
         required: true
     },
     num_people:{
-        type: Number,
-        required: true
+        type: Number
+        //required: true
     },
     total:{ //OPCIONAL
         type: Number
