@@ -54,6 +54,20 @@ router.get('/zones', async function(req, res) {
     }
     //const date = new Date(req.query.date);
 });
+router.get('/filter', async function(req, res) {
+    try{
+        let search = req.query.search;
+        let ldate = req.query.date;
+        const reserves = await Reserva.find({clientName:{$regex: '(.*)' + search + '(.*)'},date:ldate});
+        //console.log(reserves);
+        //const reserve = await Reserva.find(req.query.date);
+        res.json(reserves);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
+});
 
 /*router.get('/zones/:zone/:date', async function(req, res) {
     try{
