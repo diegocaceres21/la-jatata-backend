@@ -15,18 +15,7 @@ router.get('/all', async (req,res)=>{
     }
 });
 
-/*router.get('/waiter', async function(req, res) {
-    try{
-        let waiterId = req.query.waiterId;
-        const reservas = await Reserva.find({waiterId:waiterId})
-        //const reserve = await Reserva.find(req.query.date);
-        res.json(reservas);
-    }
-    catch(err){
-        res.json({message:err});
-    }
-    //const date = new Date(req.query.date);
-});*/
+
 //Para cuando ambos sean undefined usar el get /
 router.get('/zones', async function(req, res) {
     try{
@@ -68,7 +57,18 @@ router.get('/filter', async function(req, res) {
     }
     //const date = new Date(req.query.date);
 });
-
+router.get('/notPaid', async function(req, res) {
+    try{
+        let tdate = req.query.date;
+        const reservas = await Reserva.find({date:tdate,isPaid:false})
+        //const reserve =  Reserva.find(req.query.date);
+        res.json(reservas);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+    //const date = new Date(req.query.date);
+});
 /*router.get('/zones/:zone/:date', async function(req, res) {
     try{
         const reservas = await Reserva.find({zone:req.params.zone, date:req.params.date})
@@ -100,9 +100,6 @@ router.get('/:reserveId', async (req,res)=>{
     }
 });
 
-/*router.get('/:date', async function(req, res) {
-    const date = new Date(req.query.date);
-});*/
 
 router.get('/', async function(req, res) {
     try{
@@ -141,6 +138,15 @@ router.patch('/:reserveId', async (req,res)=>{
     }
 });
 
+router.patch('/venta/:reserveId', async (req,res)=>{
+    try{
+        const updatedReserve = await Reserva.updateOne({_id: req.params.reserveId},{$set: {isPaid:true}});
+        res.json(updatedReserve);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+});
 // put in nodejs?
 router.put("/:reserveId", async(req, res) => {
     try{
@@ -152,7 +158,8 @@ router.put("/:reserveId", async(req, res) => {
             total: req.body.total,
             products: req.body.products,
             waiterName: req.body.waiterName,
-            notas:req.body.notas
+            notas:req.body.notas,
+            isPaid: false
         }});
         res.json(updatedReserve);
     }
@@ -172,7 +179,8 @@ router.post('/',(req,res)=>{
         total: req.body.total,
         products: req.body.products,
         waiterName: req.body.waiterName,
-        notas:req.body.notas
+        notas:req.body.notas,
+        isPaid: false
     });
     reserve.save()
     .then(data=>{

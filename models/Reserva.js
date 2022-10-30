@@ -48,6 +48,10 @@ const ReservaSchema = mongoose.Schema({
     waiterName:{
         type: String
     },
+    isPaid:{
+        type: Boolean,
+        required:true
+    }
 },{ _id: false });
 
 ReservaSchema.plugin(AutoIncrement, {id: 'reserves_id_counter',inc_field: '_id'});
