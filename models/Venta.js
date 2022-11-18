@@ -27,6 +27,6 @@ const VentaSchema = mongoose.Schema({
         total:Number
     }],
 },{ _id: false });
-
+//mAYBE
 VentaSchema.plugin(AutoIncrement, {id: 'ventas_id_counter',inc_field: '_id'});
 module.exports = mongoose.model('Venta',VentaSchema)
