@@ -18,7 +18,20 @@ router.get('/all', async (req,res)=>{
 router.get('/', async function(req, res) {
     try{
         let cat = req.query.category;
-        const products = await Product.find({category:cat}).sort({name:1});
+        let tdate = req.query.date;
+        date = new Date(tdate);
+        //console.log(date.getDay())
+        let products = null;
+        if(date.getDay() === 6){
+            products = await Product.find({category:cat,day:['SABADO','AMBOS']}).sort({name:1});
+        }
+        else if(date.getDay() === 0){
+            products = await Product.find({category:cat,day:['DOMINGO','AMBOS']}).sort({name:1});
+        }
+        else{
+            products = await Product.find({category:cat}).sort({name:1});
+        }
+        //const products = await Product.find({category:cat}).sort({name:1});
         //const reserve = await Reserva.find(req.query.date);
         res.json(products);
     }
