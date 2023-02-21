@@ -6,7 +6,13 @@ const Venta = require('../models/Venta')
 //nodejs http get by date?
 //GET ALL RESERVES
 router.get('/all', async (req,res)=>{
-    print('hola')
+    try{
+        const ventas = await Venta.find();
+        res.json(ventas);
+    }
+    catch(err){
+        res.json({message:err});
+    }
 });
 
 //Para cuando ambos sean undefined usar el get /
