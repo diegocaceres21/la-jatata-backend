@@ -5,6 +5,19 @@ const Venta = require('../models/Venta')
 
 //nodejs http get by date?
 //GET ALL RESERVES
+router.get('/range', async (req,res)=>{
+    const startDate = req.query.start;
+    console.log(startDate)
+    const endDate = req.query.end;
+    console.log(endDate)
+    try{
+        const filteredData =  await Venta.find({ date: { $gte: startDate, $lte: endDate }});
+        res.json(filteredData);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+});
 router.get('/all', async (req,res)=>{
     try{
         const ventas = await Venta.find();
@@ -55,20 +68,7 @@ router.get('/:ventaId', async (req,res)=>{
     }
 });
 
-router.get('/range/:start/:end', async (req,res)=>{
-    const startDate = new Date(req.params.start);
-    const endDate = new Date(req.params.end);
-    try{
-        const filteredData = Venta.filter((item) => {
-            const itemDate = new Date(item.date);
-            return itemDate >= startDate && itemDate <= endDate;
-          });
-        res.json(filteredData);
-    }
-    catch(err){
-        res.json({message:err});
-    }
-});
+
 
 
 router.get('/', async function(req, res) {
