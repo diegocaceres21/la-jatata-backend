@@ -6,13 +6,7 @@ const Venta = require('../models/Venta')
 //nodejs http get by date?
 //GET ALL RESERVES
 router.get('/all', async (req,res)=>{
-    try{
-        const ventas = await Venta.find();
-        res.json(ventas);
-    }
-    catch(err){
-        res.json({message:err});
-    }
+    print('hola')
 });
 
 //Para cuando ambos sean undefined usar el get /
@@ -49,6 +43,21 @@ router.get('/:ventaId', async (req,res)=>{
     try{
         const venta = await Venta.findById(req.params.ventaId);
         res.json(venta);
+    }
+    catch(err){
+        res.json({message:err});
+    }
+});
+
+router.get('/range/:start/:end', async (req,res)=>{
+    const startDate = new Date(req.params.start);
+    const endDate = new Date(req.params.end);
+    try{
+        const filteredData = Venta.filter((item) => {
+            const itemDate = new Date(item.date);
+            return itemDate >= startDate && itemDate <= endDate;
+          });
+        res.json(filteredData);
     }
     catch(err){
         res.json({message:err});
