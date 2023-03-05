@@ -43,8 +43,7 @@ router.get('/report', async (req,res)=>{
                 { $unwind: '$products' },
                 //{ $lookup: { from: 'products', localField: 'products.product', foreignField: '_id', as: 'product' } },
                 { $group: {
-                  product_name: '$products.product_name',
-                  isPlate: '$products.isPlate',
+                  _id: {product_name: '$products.product_name',isPlate:'$products.isPlate'},
                   totalQuantity: { $sum: '$products.quantity'},
                   totalSales: { $sum: '$products.total'}
                 }}
