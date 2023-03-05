@@ -37,7 +37,7 @@ router.get('/report', async (req,res)=>{
           const sortedSales = Object.entries(groupedSales)
             .sort((a, b) => b[1] - a[1])
             .map(entry => ({ product: entry[0], totalSales: entry[1] }));*/
-            const sales = await Venta   .aggregate([
+            const sales = await Venta.aggregate([
                 { $match: { date: { $gte: startDate, $lte: endDate } } },
                 //{ $match: { _id: 10} },
                 { $unwind: '$products' },
