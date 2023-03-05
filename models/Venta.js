@@ -24,7 +24,8 @@ const VentaSchema = mongoose.Schema({
         product_name: String,
         price: Number,
         quantity:Number,
-        total:Number
+        total:Number,
+        isPlate:Boolean
     }],
 },{ _id: false });
 //mAYBE
