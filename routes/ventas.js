@@ -46,6 +46,9 @@ router.get('/report', async (req,res)=>{
                   _id: {product_name: '$products.product_name',isPlate:'$products.isPlate'},
                   totalQuantity: { $sum: '$products.quantity'},
                   totalSales: { $sum: '$products.total'}
+                }},
+                {$sort: {
+                    _id: 1
                 }}
               ]).exec();
           
