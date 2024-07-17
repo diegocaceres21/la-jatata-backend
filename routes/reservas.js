@@ -23,6 +23,7 @@ router.get('/cantidades', async (req, res) => {
             { $match: { date: { $eq: date } } },
             // Desenreda el array de productos en las reservas
             { $unwind: '$products' },
+            { $match: { 'products.isPlate': true } },
             // Agrupa por product_id y product_name y calcula la suma de quantity y total
             { $group: {
                     _id: { product_id: '$products.product_id', product_name: '$products.product_name' },
