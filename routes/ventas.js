@@ -23,36 +23,22 @@ router.get('/report', async (req,res)=>{
     const endDate = new Date(req.query.end);
     console.log(endDate)
     try{
-        /*const sales = await Sales.find({
-            date: { $gte: startDate, $lte: endDate }
-          }).exec();
-          
-          const groupedSales = sales.reduce((result, sale) => {
-            const product = sale.product;
-            const amount = sale.amount;
-            result[product] = (result[product] || 0) + amount;
-            return result;
-          }, {});
-          
-          const sortedSales = Object.entries(groupedSales)
-            .sort((a, b) => b[1] - a[1])
-            .map(entry => ({ product: entry[0], totalSales: entry[1] }));*/
-            const sales = await Venta.aggregate([
-                { $match: { date: { $gte: startDate, $lte: endDate } } },
-                //{ $match: { _id: 10} },
-                { $unwind: '$products' },
-                //{ $lookup: { from: 'products', localField: 'products.product', foreignField: '_id', as: 'product' } },
-                { $group: {
-                  _id: {product_name: '$products.product_name',isPlate:'$products.isPlate'},
-                  totalQuantity: { $sum: '$products.quantity'},
-                  totalSales: { $sum: '$products.total'}
-                }},
-                {$sort: {
-                    _id: 1
-                }}
-              ]).exec();
-          
-          res.json(sales);
+        const sales = await Venta.aggregate([
+            { $match: { date: { $gte: startDate, $lte: endDate } } },
+            //{ $match: { _id: 10} },
+            { $unwind: '$products' },
+            //{ $lookup: { from: 'products', localField: 'products.product', foreignField: '_id', as: 'product' } },
+            { $group: {
+              _id: {product_name: '$products.product_name',isPlate:'$products.isPlate'},
+              totalQuantity: { $sum: '$products.quantity'},
+              totalSales: { $sum: '$products.total'}
+            }},
+            {$sort: {
+                _id: 1
+            }}
+          ]).exec();
+
+      res.json(sales);
     }
     catch(err){
         res.json({message:err});
