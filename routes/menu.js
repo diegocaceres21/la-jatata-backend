@@ -32,14 +32,12 @@ router.get('/:menuId', async (req,res)=>{
 router.get('/', async function(req, res) {
     try{
         let tdate = req.query.date;
-        const menu = await Menu.find({date:tdate})
-        //const reserve = await Reserva.find(req.query.date);
+        const menu = await Menu.findOne({date:tdate})
         res.json(menu);
     }
     catch(err){
         res.json({message:err});
     }
-    //const date = new Date(req.query.date);
 });
 
 
