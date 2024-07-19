@@ -13,7 +13,7 @@ router.get('/range', async (req,res)=>{
         res.json(filteredData);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -41,7 +41,7 @@ router.get('/report', async (req,res)=>{
       res.json(sales);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -51,7 +51,7 @@ router.get('/all', async (req,res)=>{
         res.json(ventas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -78,7 +78,7 @@ router.get('/all', async (req,res)=>{
         res.json(reservas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });*/
@@ -91,7 +91,7 @@ router.get('/:ventaId', async (req,res)=>{
         res.json(venta);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -106,7 +106,7 @@ router.get('/', async function(req, res) {
         res.json(ventas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -120,7 +120,7 @@ router.delete('/:ventaId', async (req,res)=>{
         res.json(removedVenta);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -131,7 +131,7 @@ router.patch('/:ventaId', async (req,res)=>{
         res.json(updatedVenta);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -148,7 +148,7 @@ router.put("/:ventaId", async(req, res) => {
         res.json(updatedVenta);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 }) 
 

@@ -11,7 +11,7 @@ router.get('/all', async (req,res)=>{
         res.json(comandas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -23,7 +23,7 @@ router.get('/', async function(req, res) {
         res.json(comandas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -39,7 +39,7 @@ router.get('/date', async function(req, res) {
         res.json(comandas); 
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -55,7 +55,7 @@ router.get('/menu', async function(req, res) {
         res.json(comandas); 
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -66,7 +66,7 @@ router.get('/:comandaId', async (req,res)=>{
         res.json(comanda);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -77,7 +77,7 @@ router.delete('/:comandaId', async (req,res)=>{
         res.json(removedComanda);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -88,7 +88,7 @@ router.patch('/:comandaId', async (req,res)=>{
         res.json(updatedComanda);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -98,7 +98,7 @@ router.patch('/completed/:comandaId', async (req,res)=>{
         res.json(updatedComanda);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
  
@@ -115,7 +115,7 @@ router.post('/',(req,res)=>{
         res.json(data);
     })
     .catch(err=>{
-        res.json({message: err});
+        res.status(500).json({error: err});
     })
 });
 module.exports = router;
