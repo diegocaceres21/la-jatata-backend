@@ -24,10 +24,14 @@ const ComandaSchema = mongoose.Schema({
 
 ComandaSchema.plugin(AutoIncrement, {id: 'comanda_id_counter',inc_field: '_id'});
 
-ComandaSchema.post('save', function(doc) {
+ComandaSchema.methods.toJSON = function() {
+    const obj = this.toObject();
     const timeZone = 'America/La_Paz';
-    doc.createdAt = new Date(doc.createdAt).toLocaleString('en-US', { timeZone });
-    doc.updatedAt = new Date(doc.updatedAt).toLocaleString('en-US', { timeZone });
-});
+
+    obj.createdAt = new Date(obj.createdAt).toLocaleString('en-US', { timeZone });
+    obj.updatedAt = new Date(obj.updatedAt).toLocaleString('en-US', { timeZone });
+
+    return obj;
+};
 
 module.exports = mongoose.model('Comanda',ComandaSchema)
