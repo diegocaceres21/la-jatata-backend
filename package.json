@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "14.x",
+    "node": "18.x",
     "npm": "7.x"
   },
   "scripts": {
@@ -17,9 +17,11 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
+    "moment-timezone": "^0.5.45",
     "mongodb-autoincrement": "^1.0.1",
     "mongoose": "^6.6.0",
     "mongoose-sequence": "^5.3.1",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "ws": "^8.18.0"
   }
 }

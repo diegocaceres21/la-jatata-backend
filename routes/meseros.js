@@ -11,7 +11,7 @@ router.get('/', async (req,res)=>{
         res.json(meseros);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -23,7 +23,7 @@ router.get('/:meseroId', async (req,res)=>{
         res.json(mesero);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -34,7 +34,7 @@ router.delete('/:meseroId', async (req,res)=>{
         res.json(removedMesero);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -44,7 +44,7 @@ router.delete('/:meseroId', async (req,res)=>{
         res.json(updatedProduct);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });*/
 /*router.get('/inside',(req,res)=>{

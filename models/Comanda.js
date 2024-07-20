@@ -23,4 +23,5 @@ const ComandaSchema = mongoose.Schema({
 { _id: false });
 
 ComandaSchema.plugin(AutoIncrement, {id: 'comanda_id_counter',inc_field: '_id'});
+
 module.exports = mongoose.model('Comanda',ComandaSchema)

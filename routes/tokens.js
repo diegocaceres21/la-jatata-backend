@@ -11,7 +11,7 @@ router.get('/', async (req,res)=>{
         res.json(tokens);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -22,7 +22,7 @@ router.delete('/:tokenId', async (req,res)=>{
         res.json(removedToken);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 

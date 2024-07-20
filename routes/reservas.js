@@ -11,10 +11,34 @@ router.get('/all', async (req,res)=>{
         res.json(reservas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
+router.get('/cantidades', async (req, res) => {
+    const date = new Date(req.query.date);
+    try {
+        const cantidadesReservadas = await Reserva.aggregate([
+            // Filtra las reservas por fecha
+            { $match: { date: { $eq: date } } },
+            // Desenreda el array de productos en las reservas
+            { $unwind: '$products' },
+            { $match: { 'products.isPlate': true } },
+            // Agrupa por product_id y product_name y calcula la suma de quantity y total
+            { $group: {
+                    _id: { product_id: '$products.product_id', product_name: '$products.product_name' },
+                    totalQuantity: { $sum: '$products.quantity' },
+                    //totalSales: { $sum: '$products.total' }
+                }},
+            // Ordena los resultados por product_name
+            { $sort: { '_id.product_name': 1 } }
+        ]).exec();
+
+        res.json(cantidadesReservadas);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 //Para cuando ambos sean undefined usar el get /
 router.get('/zones', async function(req, res) {
@@ -39,7 +63,7 @@ router.get('/zones', async function(req, res) {
         res.json(reservas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -53,7 +77,7 @@ router.get('/filter', async function(req, res) {
         res.json(reserves);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -65,7 +89,7 @@ router.get('/notPaid', async function(req, res) {
         res.json(reservas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -75,7 +99,7 @@ router.get('/notPaid', async function(req, res) {
         res.json(reservas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });*/
@@ -86,7 +110,7 @@ router.get('/notPaid', async function(req, res) {
         res.json(reservas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });*/
 //GET PRODUCT BY ID
@@ -96,7 +120,7 @@ router.get('/:reserveId', async (req,res)=>{
         res.json(reserve);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -109,7 +133,7 @@ router.get('/', async function(req, res) {
         res.json(reservas);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -123,7 +147,7 @@ router.delete('/:reserveId', async (req,res)=>{
         res.json(removedReserve);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -134,7 +158,7 @@ router.patch('/:reserveId', async (req,res)=>{
         res.json(updatedReserve);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -144,7 +168,7 @@ router.patch('/venta/:reserveId', async (req,res)=>{
         res.json(updatedReserve);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 // put in nodejs?
@@ -164,7 +188,7 @@ router.put("/:reserveId", async(req, res) => {
         res.json(updatedReserve);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 }) 
 
@@ -187,7 +211,7 @@ router.post('/',(req,res)=>{
         res.json(data);
     })
     .catch(err=>{
-        res.json({message: err});
+        res.status(500).json({error: err});
     })
 });
 module.exports = router;

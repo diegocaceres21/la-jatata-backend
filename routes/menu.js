@@ -3,6 +3,7 @@ const express =require('express');
 const router = express.Router();
 const Menu = require('../models/Menu')
 
+
 //nodejs http get by date?
 //GET ALL RESERVES
 router.get('/all', async (req,res)=>{
@@ -11,7 +12,7 @@ router.get('/all', async (req,res)=>{
         res.json(menus);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -23,7 +24,7 @@ router.get('/:menuId', async (req,res)=>{
         res.json(menu);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -31,14 +32,12 @@ router.get('/:menuId', async (req,res)=>{
 router.get('/', async function(req, res) {
     try{
         let tdate = req.query.date;
-        const menu = await Menu.find({date:tdate})
-        //const reserve = await Reserva.find(req.query.date);
+        const menu = await Menu.findOne({date:tdate})
         res.json(menu);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
-    //const date = new Date(req.query.date);
 });
 
 
@@ -50,7 +49,7 @@ router.delete('/:menuId', async (req,res)=>{
         res.json(removedMenu);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -61,7 +60,7 @@ router.patch('/:menuId', async (req,res)=>{
         res.json(updatedMenu);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -78,7 +77,7 @@ router.patch('/:menuId', async (req,res)=>{
         res.json(updatedVenta);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 }) 
 */
@@ -94,7 +93,7 @@ router.post('/',(req,res)=>{
         res.json(data);
     })
     .catch(err=>{
-        res.json({message: err});
+        res.status(500).json({error: err});
     })
 });
 module.exports = router;

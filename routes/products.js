@@ -11,7 +11,7 @@ router.get('/all', async (req,res)=>{
         res.json(products);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -36,7 +36,7 @@ router.get('/', async function(req, res) {
         res.json(products);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -55,7 +55,7 @@ router.get('/filter', async function(req, res) {
         res.json(products);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
 });
@@ -67,7 +67,7 @@ router.get('/:productId', async (req,res)=>{
         res.json(product);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -78,7 +78,7 @@ router.delete('/:productId', async (req,res)=>{
         res.json(removedProduct);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 
@@ -94,7 +94,7 @@ router.put("/:productId", async(req, res) => {
         res.json(updatedProduct);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 }) 
 router.patch('/:productId', async (req,res)=>{
@@ -103,7 +103,7 @@ router.patch('/:productId', async (req,res)=>{
         res.json(updatedProduct);
     }
     catch(err){
-        res.json({message:err});
+        res.status(500).json({error:err});
     }
 });
 /*router.get('/inside',(req,res)=>{

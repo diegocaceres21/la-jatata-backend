@@ -2,16 +2,6 @@
 const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-class OrderItem {
-    constructor(product_id,product_name,price, quantity) {
-      this.product_id = product_id;
-      this.product_name = product_name;
-      this.quantity = quantity;
-      this.price = price;
-      this.total = this.quantity * this.price;
-    }
-  }
-
 const ReservaSchema = mongoose.Schema({
     /*id:{
         type: Number,
