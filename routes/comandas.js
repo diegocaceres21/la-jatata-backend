@@ -27,21 +27,38 @@ router.get('/', async function(req, res) {
     }
     //const date = new Date(req.query.date);
 });
-router.get('/date', async function(req, res) {
+/*router.get('/date', async function(req, res) {
     try{
         let date = req.query.date;
         let startDate = new Date(date);
         startDate.setHours(0, 0, 0, 0)
         let endDate = new Date(date);
         endDate.setHours(23, 59, 59, 59)
-        const comandas = await Comanda.find({createdAt:{$gte:startDate, $lt:endDate}/*,status:"Pendiente"*/,status:"Pendiente"})
-        //const reserve = await Reserva.find(req.query.date);
-        res.json(comandas); 
+        const comandas = await Comanda.find({createdAt:{$gte:startDate, $lt:endDate},status:"Pendiente"})
+        res.json(comandas);
     }
     catch(err){
         res.status(500).json({error:err});
     }
-    //const date = new Date(req.query.date);
+});*/
+router.get('/date', async function(req, res) {
+    try {
+        let date = req.query.date;
+
+        // Convert the provided date to the desired time zone
+        let startDate = moment.tz(date, "America/La_Paz").startOf('day').toDate();
+        let endDate = moment.tz(date, "America/La_Paz").endOf('day').toDate();
+
+        // Query the database for documents within the whole day of the given date
+        const comandas = await Comanda.find({
+            createdAt: { $gte: startDate, $lt: endDate },
+            status: "Pendiente"
+        });
+
+        res.json(comandas);
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
 });
 router.get('/menu', async function(req, res) {
     try{
