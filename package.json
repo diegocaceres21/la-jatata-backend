@@ -20,6 +20,7 @@
     "mongodb-autoincrement": "^1.0.1",
     "mongoose": "^6.6.0",
     "mongoose-sequence": "^5.3.1",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "ws": "^8.18.0"
   }
 }

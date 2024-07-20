@@ -19,8 +19,16 @@ const ComandaSchema = mongoose.Schema({
     status:{type:String},
     notes: {type:String}
 },
-{timestamps: true},
+//{timestamps: true},
 { _id: false });
 
 ComandaSchema.plugin(AutoIncrement, {id: 'comanda_id_counter',inc_field: '_id'});
+
+ComandaSchema.pre('save', function(next) {
+    const timeZone = 'America/La_Paz';
+    this.createdAt = new Date().toLocaleString('en-US', { timeZone });
+    this.updatedAt = new Date().toLocaleString('en-US', { timeZone });
+    next();
+});
+
 module.exports = mongoose.model('Comanda',ComandaSchema)
