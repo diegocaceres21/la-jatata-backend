@@ -27,7 +27,7 @@ router.get('/', async function(req, res) {
     }
     //const date = new Date(req.query.date);
 });
-/*router.get('/date', async function(req, res) {
+router.get('/date', async function(req, res) {
     try{
         let date = req.query.date;
         let startDate = new Date(date);
@@ -40,8 +40,8 @@ router.get('/', async function(req, res) {
     catch(err){
         res.status(500).json({error:err});
     }
-});*/
-router.get('/date', async function(req, res) {
+});
+/*router.get('/date', async function(req, res) {
     try {
         let date = req.query.date;
 
@@ -59,7 +59,7 @@ router.get('/date', async function(req, res) {
     } catch (err) {
         res.status(500).json({ error: err });
     }
-});
+});*/
 router.get('/menu', async function(req, res) {
     try{
         let date = req.query.date;
