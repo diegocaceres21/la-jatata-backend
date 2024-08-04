@@ -2,6 +2,7 @@ const express =require('express');
 
 const router = express.Router();
 const Comanda = require('../models/Comanda')
+const Reserva = require("../models/Reserva");
 
 
 //GET ALL RESERVES
@@ -41,25 +42,6 @@ router.get('/date', async function(req, res) {
         res.status(500).json({error:err});
     }
 });
-/*router.get('/date', async function(req, res) {
-    try {
-        let date = req.query.date;
-
-        // Convert the provided date to the desired time zone
-        let startDate = moment.tz(date, "America/La_Paz").startOf('day').toDate();
-        let endDate = moment.tz(date, "America/La_Paz").endOf('day').toDate();
-
-        // Query the database for documents within the whole day of the given date
-        const comandas = await Comanda.find({
-            createdAt: { $gte: startDate, $lt: endDate },
-            status: "Pendiente"
-        });
-
-        res.json(comandas);
-    } catch (err) {
-        res.status(500).json({ error: err });
-    }
-});*/
 router.get('/menu', async function(req, res) {
     try{
         let date = req.query.date;
@@ -76,6 +58,27 @@ router.get('/menu', async function(req, res) {
     }
     //const date = new Date(req.query.date);
 });
+router.get('/cantidades', async (req, res) => {
+    const date = new Date(req.query.date);
+    const startOfDay = new Date(date.setHours(0, 0, 0, 0));
+    const endOfDay = new Date(date.setHours(23, 59, 59, 999));
+
+    try {
+        const cantidadesEntregadas = await Comanda.aggregate([
+            { $match: { createdAt: { $gte: startOfDay, $lt: endOfDay } } },
+            { $unwind: '$products' },
+            { $match: { 'products.state': "Entregado" } },
+            { $group: {
+                    _id: { product_id: '$products.product_id', product_name: '$products.product_name' },
+                    totalQuantity: { $sum: '$products.quantity' },
+                }},
+            { $sort: { '_id.product_name': 1 } }
+        ]).exec();
+        res.json(cantidadesEntregadas);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 //GET PRODUCT BY ID
 router.get('/:comandaId', async (req,res)=>{
     try{
@@ -90,7 +93,7 @@ router.get('/:comandaId', async (req,res)=>{
 //DELETE
 router.delete('/:comandaId', async (req,res)=>{
     try{
-        const removedComanda = await Comanda.remove({_id: req.params.comandaId});
+        const removedComanda = await Comanda.findByIdAndDelete(req.params.comandaId);
         res.json(removedComanda);
     }
     catch(err){
@@ -135,4 +138,6 @@ router.post('/',(req,res)=>{
         res.status(500).json({error: err});
     })
 });
+
+
 module.exports = router;

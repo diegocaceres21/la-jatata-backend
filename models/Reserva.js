@@ -1,12 +1,7 @@
 
 const mongoose = require('mongoose')
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const ReservaSchema = mongoose.Schema({
-    /*id:{
-        type: Number,
-    },*/
-    _id: {type: Number},
     date:{
         type: Date
     },
@@ -43,7 +38,6 @@ const ReservaSchema = mongoose.Schema({
         type: Boolean,
         required:true
     }
-},{ _id: false });
+});
 
-ReservaSchema.plugin(AutoIncrement, {id: 'reserves_id_counter',inc_field: '_id'});
 module.exports = mongoose.model('Reserva',ReservaSchema)

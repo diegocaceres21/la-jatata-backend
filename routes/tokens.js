@@ -18,7 +18,7 @@ router.get('/', async (req,res)=>{
 //DELETE
 router.delete('/:tokenId', async (req,res)=>{
     try{
-        const removedToken = await Token.remove({_id: req.params.tokenId});
+        const removedToken = await Token.findByIdAndDelete(req.params.tokenId);
         res.json(removedToken);
     }
     catch(err){

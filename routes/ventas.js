@@ -116,7 +116,7 @@ router.get('/', async function(req, res) {
 //nodejs pass date as query param?
 router.delete('/:ventaId', async (req,res)=>{
     try{
-        const removedVenta = await Venta.remove({_id: req.params.ventaId});
+        const removedVenta = await Venta.findByIdAndDelete(req.params.ventaId);
         res.json(removedVenta);
     }
     catch(err){

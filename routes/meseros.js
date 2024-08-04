@@ -30,7 +30,7 @@ router.get('/:meseroId', async (req,res)=>{
 //DELETE
 router.delete('/:meseroId', async (req,res)=>{
     try{
-        const removedMesero = await Mesero.remove({_id: req.params.meseroId});
+        const removedMesero = await Mesero.findByIdAndDelete(req.params.meseroId);
         res.json(removedMesero);
     }
     catch(err){

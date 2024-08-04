@@ -1,10 +1,8 @@
 
 const mongoose = require('mongoose')
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const ComandaSchema = mongoose.Schema({
 
-    _id: {type: Number},
     id_reserva:{
         type: String,
         required: true
@@ -19,9 +17,7 @@ const ComandaSchema = mongoose.Schema({
     status:{type:String},
     notes: {type:String}
 },
-{timestamps: true},
-{ _id: false });
+{timestamps: true});
 
-ComandaSchema.plugin(AutoIncrement, {id: 'comanda_id_counter',inc_field: '_id'});
 
 module.exports = mongoose.model('Comanda',ComandaSchema)

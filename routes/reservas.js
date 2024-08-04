@@ -143,7 +143,7 @@ router.get('/', async function(req, res) {
 //nodejs pass date as query param?
 router.delete('/:reserveId', async (req,res)=>{
     try{
-        const removedReserve = await Reserva.remove({_id: req.params.reserveId});
+        const removedReserve = await Reserva.findByIdAndDelete( req.params.reserveId);
         res.json(removedReserve);
     }
     catch(err){

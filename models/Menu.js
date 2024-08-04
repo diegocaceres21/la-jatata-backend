@@ -1,10 +1,8 @@
 
 const mongoose = require('mongoose')
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const MenuSchema = mongoose.Schema({
 
-    _id: {type: Number},
     date:{
         type: Date
     },
@@ -15,7 +13,6 @@ const MenuSchema = mongoose.Schema({
         //reservated:Number,
         //delivered:Number
     }],
-},{ _id: false });
+});
 
-MenuSchema.plugin(AutoIncrement, {id: 'menu_id_counter',inc_field: '_id'});
 module.exports = mongoose.model('Menu',MenuSchema)

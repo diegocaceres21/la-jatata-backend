@@ -45,7 +45,7 @@ router.get('/', async function(req, res) {
 //nodejs pass date as query param?
 router.delete('/:menuId', async (req,res)=>{
     try{
-        const removedMenu = await Menu.remove({_id: req.params.menuId});
+        const removedMenu = await Menu.findByIdAndDelete(req.params.menuId);
         res.json(removedMenu);
     }
     catch(err){
