@@ -7,7 +7,7 @@ const MenuSchema = mongoose.Schema({
         type: Date
     },
     products:[{
-        product_id: String,
+        product_id: { type: mongoose.Schema.Types.ObjectId },
         product_name: String,
         prepared: Number,
         //reservated:Number,
