@@ -21,7 +21,7 @@ const ReservaSchema = mongoose.Schema({
         type: Number
     },
     products:[{
-        product_id: Number,
+        product_id: { type: mongoose.Schema.Types.ObjectId },
         product_name: String,
         price: Number,
         quantity:Number,

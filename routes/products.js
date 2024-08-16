@@ -2,6 +2,7 @@ const express =require('express');
 
 const router = express.Router();
 const Product = require('../models/Product')
+const Reserva = require("../models/Reserva");
 
 
 //GET ALL PRODUCTS
@@ -46,7 +47,7 @@ router.get('/', async function(req, res) {
 
 ///test/i
 
-router.get('/filter', async function(req, res) {
+/*router.get('/filter', async function(req, res) {
     try{
         let search = req.query.search;
         const products = await Product.find({name:{$regex: '(.*)' + search + '(.*)'}});
@@ -58,6 +59,26 @@ router.get('/filter', async function(req, res) {
         res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
+});*/
+router.get('/filter', async function(req, res) {
+    try {
+        let search = req.query.search || '';
+        let category = req.query.category
+        // Normalize the search term to remove accents and convert to lowercase
+        search = search.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+        // Create a case-insensitive regex pattern for the search term
+        const searchRegex = new RegExp(search, 'i');
+
+        const productos = await Product.find({
+            name: { $regex: searchRegex },
+            category: {$eq: category}
+        });
+
+        res.json(productos);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 //GET PRODUCT BY ID

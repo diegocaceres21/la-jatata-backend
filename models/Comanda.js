@@ -9,7 +9,7 @@ const ComandaSchema = mongoose.Schema({
     },
     //waiter_name:{type: String},
     products:[{
-        product_id: Number,
+        product_id: String,
         product_name: String,
         quantity:Number,
         state:String

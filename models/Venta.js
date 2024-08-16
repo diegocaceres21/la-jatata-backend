@@ -18,7 +18,7 @@ const VentaSchema = mongoose.Schema({
         type: Number
     },
     products:[{
-        product_id: Number,
+        product_id: String,
         product_name: String,
         price: Number,
         quantity:Number,

@@ -67,19 +67,39 @@ router.get('/zones', async function(req, res) {
     }
     //const date = new Date(req.query.date);
 });
-router.get('/filter', async function(req, res) {
+/*router.get('/filter', async function(req, res) {
     try{
         let search = req.query.search;
         let ldate = req.query.date;
         const reserves = await Reserva.find({clientName:{$regex: '(.*)' + search + '(.*)'},date:ldate});
-        //console.log(reserves);
-        //const reserve = await Reserva.find(req.query.date);
         res.json(reserves);
     }
     catch(err){
         res.status(500).json({error:err});
     }
     //const date = new Date(req.query.date);
+});*/
+
+router.get('/filter', async function(req, res) {
+    try {
+        let search = req.query.search || '';
+        let ldate = req.query.date;
+
+        // Normalize the search term to remove accents and convert to lowercase
+        search = search.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+        // Create a case-insensitive regex pattern for the search term
+        const searchRegex = new RegExp(search, 'i');
+
+        const reserves = await Reserva.find({
+            clientName: { $regex: searchRegex },
+            date: ldate
+        });
+
+        res.json(reserves);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 router.get('/notPaid', async function(req, res) {
     try{
