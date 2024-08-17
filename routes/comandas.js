@@ -2,7 +2,6 @@ const express =require('express');
 
 const router = express.Router();
 const Comanda = require('../models/Comanda')
-const Reserva = require("../models/Reserva");
 
 
 //GET ALL RESERVES
@@ -51,7 +50,7 @@ router.get('/menu', async function(req, res) {
         endDate.setHours(23, 59, 59, 59)
         const comandas = await Comanda.find({createdAt:{$gte:startDate, $lt:endDate}})
         //const reserve = await Reserva.find(req.query.date);
-        res.json(comandas); 
+        res.json(comandas);
     }
     catch(err){
         res.status(500).json({error:err});
@@ -77,6 +76,38 @@ router.get('/cantidades', async (req, res) => {
         res.json(cantidadesEntregadas);
     } catch (err) {
         res.status(500).json({ message: err.message });
+    }
+});
+
+router.get('/reportes/tiempoPromedio', async (req, res) => {
+    const startDate = new Date(req.query.start);
+    const endDate = new Date(req.query.end);
+    try {
+        const result = await Comanda.aggregate([
+            {
+                $match: {
+                    createdAt: { $gte: startDate, $lte: endDate }
+                }
+            },
+            {
+                $project: {
+                    timeDiff: { $subtract: ["$updatedAt", "$createdAt"] }
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    averageTimeDiff: { $avg: "$timeDiff" }
+                }
+            }
+        ]).exec();
+
+        const averageTimeInMs = result[0]?.averageTimeDiff || 0;
+        const averageTimeInSeconds = averageTimeInMs / 1000;
+
+        res.json({ averageTimeInSeconds });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 //GET PRODUCT BY ID
@@ -121,22 +152,22 @@ router.patch('/completed/:comandaId', async (req,res)=>{
         res.status(500).json({error:err});
     }
 });
- 
+
 router.post('/',(req,res)=>{
     const comanda = new Comanda({
-       // id: req.body.id,
+        // id: req.body.id,
         id_reserva: req.body.id_reserva,
         products: req.body.products,
         status: "Pendiente",
         notes:req.body.notes
     });
     comanda.save()
-    .then(data=>{
-        res.json(data);
-    })
-    .catch(err=>{
-        res.status(500).json({error: err});
-    })
+        .then(data=>{
+            res.json(data);
+        })
+        .catch(err=>{
+            res.status(500).json({error: err});
+        })
 });
 
 
