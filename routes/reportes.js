@@ -92,20 +92,35 @@ async function totalDeVentasDelPeriodo(startDate, endDate){
 }
 
 async function ventasPorProducto(startDate, endDate, isPlate){
-    return  await Venta.aggregate([
+    return await Venta.aggregate([
         { $match: { date: { $gte: startDate, $lte: endDate } } },
         { $unwind: '$products' },
         { $match: { 'products.isPlate': isPlate } },
         { $group: {
-                _id: {product_name: '$products.product_name'},
-                totalQuantity: { $sum: '$products.quantity'},
-                totalSales: { $sum: '$products.total'}
+                _id: { product_name: '$products.product_name' },
+                totalQuantity: { $sum: '$products.quantity' },
+                totalSales: { $sum: '$products.total' }
             }},
-        {$sort: {
-                _id: 1
-        }}
+        { $sort: { '_id.product_name': 1 } }, // Asegúrate de ordenar por el campo correcto
+        {
+            $facet: {
+                productTotals: [ // Subpipeline para totales por producto
+                    { $sort: { '_id.product_name': 1 } }
+                ],
+                overallTotal: [ // Subpipeline para el total general
+                    { $group: { _id: null, totalSales: { $sum: '$totalSales' } } }
+                ]
+            }
+        },
+        {
+            $project: {
+                productTotals: 1,
+                overallTotal: { $arrayElemAt: ['$overallTotal.totalSales', 0] }
+            }
+        }
     ]).exec();
 }
+
 
 async function mesasAtendidasPorMesero(startDate, endDate){
     return await Reserva.aggregate([
