@@ -10,7 +10,8 @@ router.get('/obtenerTodasLasEstadisticas', async (req,res) => {
     try {
         const promises = [];
         promises.push(ventasPorMetodoDePago(startDate, endDate));
-        promises.push(ventasPorProducto(startDate, endDate));
+        promises.push(ventasPorProducto(startDate, endDate, true));
+        promises.push(ventasPorProducto(startDate, endDate, false));
         promises.push(mesasAtendidasPorMesero(startDate, endDate));
         promises.push(totalDeVentasDelPeriodo(startDate, endDate));
         promises.push(envioDeComandasPorHora(startDate, endDate));
@@ -20,7 +21,8 @@ router.get('/obtenerTodasLasEstadisticas', async (req,res) => {
 
         let response = {};
         response.ventasPorMetodoDePago = results.shift();
-        response.ventasPorProducto = results.shift();
+        response.ventasPorProductoDePlatos = results.shift();
+        response.ventasPorProductoDeOtros = results.shift();
         response.mesasAtendidasPorMesero = results.shift();
         response.totalDeVentasDelPeriodo = results.shift();
         response.envioDeComandasPorHora = results.shift();
@@ -89,12 +91,13 @@ async function totalDeVentasDelPeriodo(startDate, endDate){
     ]).exec();
 }
 
-async function ventasPorProducto(startDate, endDate){
+async function ventasPorProducto(startDate, endDate, isPlate){
     return  await Venta.aggregate([
         { $match: { date: { $gte: startDate, $lte: endDate } } },
         { $unwind: '$products' },
+        { $match: { 'products.isPlate': isPlate } },
         { $group: {
-                _id: {product_name: '$products.product_name',isPlate:'$products.isPlate'},
+                _id: {product_name: '$products.product_name'},
                 totalQuantity: { $sum: '$products.quantity'},
                 totalSales: { $sum: '$products.total'}
             }},
@@ -109,7 +112,6 @@ async function mesasAtendidasPorMesero(startDate, endDate){
         { $match: { date: { $gte: startDate, $lte: endDate } } },
         { $group: {
                 _id: "$waiterName",
-                cantidadVentasTotales: { $count: {}},
                 cantidadPedidos: { $count: {} }
             }},
         {$sort: {
