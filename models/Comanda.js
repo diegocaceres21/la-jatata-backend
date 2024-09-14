@@ -17,6 +17,6 @@ const ComandaSchema = mongoose.Schema({
     notes: {type:String}
 },
 {timestamps: true});
-
+//TODO: ACOMODAR LA HORA QUE SE COLOCA COMO SI FUERA OTRO MERIDIANO
 
 module.exports = mongoose.model('Comanda',ComandaSchema)

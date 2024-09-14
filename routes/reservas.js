@@ -40,7 +40,6 @@ router.get('/cantidades', async (req, res) => {
     }
 });
 
-//Para cuando ambos sean undefined usar el get /
 router.get('/zones', async function(req, res) {
     try{
         let lzone = req.query.zone;
@@ -59,7 +58,6 @@ router.get('/zones', async function(req, res) {
         else{
             reservas = await Reserva.find({zone:lzone,date:ldate,waiterName:lwaiter})
         }
-        //const reserve = await Reserva.find(req.query.date);
         res.json(reservas);
     }
     catch(err){
