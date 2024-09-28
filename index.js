@@ -13,6 +13,7 @@ const meserosRoute = require('./routes/meseros')
 const ventasRoute = require('./routes/ventas')
 const menusRoute = require('./routes/menu')
 const tokensRoute = require('./routes/tokens')
+const fcmRoutes = require('./routes/fcm')
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -24,6 +25,7 @@ app.use('/meseros',meserosRoute);
 app.use('/ventas',ventasRoute);
 app.use('/menu',menusRoute);
 app.use('/tokens',tokensRoute);
+app.use('/fcm',fcmRoutes);
 
 app.get('/',(req,res)=> {
     res.send('Hola Jatata')
